@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using Es_Arboles;
 using Newtonsoft.Json;
 using System.IO;
+using Newtonsoft.Json.Linq;
 //using System.Text.Json;
 
 
@@ -33,6 +34,7 @@ namespace Lab02_EddieGiron_1307419
         public void CargarArchivo()
         {
             Persona aux = new Persona();
+            Aritmetica aritmetica = new Aritmetica();
 
             string ruta = "C:/Users/eddie/OneDrive - Universidad Rafael Landivar/U/Año 5/Segundo Ciclo/Estructura de datos 2 (lab)/inputx.csv";
 
@@ -47,16 +49,36 @@ namespace Lab02_EddieGiron_1307419
                     List<double> codigos = new List<double>();
                     for (int i = 0; i < persona.company.Length; i++)
                     {
-                        Dictionary<char, Letra> dictionario = new Dictionary<char, Letra>();
+                        Dictionary<char, Letra> dictionary = new Dictionary<char, Letra>();
                         string codigo = persona.dpi + i.ToString();
                         foreach (var c in codigo)
                         {
                             Letra nueva = new Letra(); //Se llena el diccionario de todas las letras
-                            if (!dictionario.TryAdd(c, nueva))
+                            dictionary.Add(c, nueva);
+                            if (!dictionary.ContainsKey(c))
                             {
+                                dictionary.Add(c, nueva);
                             }
-                            dictionario[c].frecuencia++; //Se aumenta la frecuencia de cada letra
+                            dictionary[c].frecuencia++; //Se aumenta la frecuencia de cada letra
                         }
+
+                        double inf = 0, sup = 0, p = 0;
+                        foreach (var c in dictionary)
+                        {
+                            //Se calcula la probabilidad y los limites inferior y superior
+                            p = (double)c.Value.frecuencia / codigo.Length;
+                            sup = inf + p;
+                            dictionary[c.Key].probabilidad = p;
+                            dictionary[c.Key].inferior = inf;
+                            dictionary[c.Key].superior = sup;
+                            inf = sup;
+                        }
+
+                        //Se genera el código
+                        double newCode = aritmetica.Coding(codigo, dictionary);
+                        codigos.Add(newCode);
+                        //Se añade el diccionario al arreglo
+                        lista.Add(dictionary);
                     }
                     listPersona.Add(persona);
                     AVL.Add(persona);

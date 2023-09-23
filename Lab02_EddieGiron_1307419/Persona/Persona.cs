@@ -21,7 +21,7 @@ namespace Lab01_EddieGiron_1307419
         public string datebirth { get; set; }
         public string address { get; set; }
         public string[] company {  get; set; }
-        public List<Dictionary<char, Letra>> diccionario { get; set; }
+        public List<Dictionary<char, Letra>> diccionarios { get; set; }
         public List<double> cifrados { get; set; }
 
 
