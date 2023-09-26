@@ -14,13 +14,13 @@ namespace Lab01_EddieGiron_1307419
             dpi = "";
             datebirth = "";
             address = "";
-            company = new string[] { };
+            companies = new string[] { };
         }
         public string name { get; set; }
         public string dpi { get; set; }
         public string datebirth { get; set; }
         public string address { get; set; }
-        public string[] company {  get; set; }
+        public string[] companies {  get; set; }
         public List<Dictionary<char, Letra>> diccionarios { get; set; }
         public List<double> cifrados { get; set; }
 

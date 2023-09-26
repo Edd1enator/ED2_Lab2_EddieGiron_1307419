@@ -30,13 +30,14 @@ namespace Lab02_EddieGiron_1307419
         public Form1()
         {
             InitializeComponent();
+            CargarArchivo();
         }
         public void CargarArchivo()
         {
             Persona aux = new Persona();
             Aritmetica aritmetica = new Aritmetica();
 
-            string ruta = "C:/Users/eddie/OneDrive - Universidad Rafael Landivar/U/Año 5/Segundo Ciclo/Estructura de datos 2 (lab)/inputx.csv";
+            string ruta = "C:/Users/eddie/OneDrive - Universidad Rafael Landivar/U/Año 5/Segundo Ciclo/Estructura de datos 2 (lab)/Laboratorio 2/input lab2.2.csv";
 
             foreach (string item in File.ReadLines(ruta))
             {
@@ -45,16 +46,15 @@ namespace Lab02_EddieGiron_1307419
                     string json = item.Substring(7);
                     Persona persona = JsonConvert.DeserializeObject<Persona>(json);
                     List<Dictionary<char, Letra>> lista = new List<Dictionary<char, Letra>>();
-                    Array.Sort(persona.company, (x, y) => String.Compare(x, y));
+                    Array.Sort(persona.companies, (x, y) => String.Compare(x, y));
                     List<double> codigos = new List<double>();
-                    for (int i = 0; i < persona.company.Length; i++)
+                    for (int i = 0; i < persona.companies.Length; i++)
                     {
                         Dictionary<char, Letra> dictionary = new Dictionary<char, Letra>();
                         string codigo = persona.dpi + i.ToString();
                         foreach (var c in codigo)
                         {
                             Letra nueva = new Letra(); //Se llena el diccionario de todas las letras
-                            dictionary.Add(c, nueva);
                             if (!dictionary.ContainsKey(c))
                             {
                                 dictionary.Add(c, nueva);
@@ -74,12 +74,12 @@ namespace Lab02_EddieGiron_1307419
                             inf = sup;
                         }
 
-                        //Se genera el código
                         double newCode = aritmetica.Coding(codigo, dictionary);
                         codigos.Add(newCode);
-                        //Se añade el diccionario al arreglo
                         lista.Add(dictionary);
                     }
+                    persona.diccionarios = lista;
+                    persona.cifrados = codigos;
                     listPersona.Add(persona);
                     AVL.Add(persona);
 
@@ -129,7 +129,7 @@ namespace Lab02_EddieGiron_1307419
             {
                 for (int i = 0; i < tlist; i++)
                 {
-                    lstPersona.Items.Add($"{listPersona[i].name} {listPersona[i].dpi} {listPersona[i].datebirth} {listPersona[i].address} {listPersona[i].company}");
+                    lstPersona.Items.Add($"{listPersona[i].name} {listPersona[i].dpi} {listPersona[i].datebirth} {listPersona[i].address}");
                 }
             }
             else
@@ -217,9 +217,38 @@ namespace Lab02_EddieGiron_1307419
             string jsonout = JsonConvert.SerializeObject(listPersona, Formatting.Indented);
             File.WriteAllText(rutasalida, jsonout);
         }
-        private void btnBuscarC_Click(object sender, EventArgs e)
+        private void btnBuscarDPI_Click(object sender, EventArgs e)
         {
-
+            List<Persona> prueba = new List<Persona>();
+            lstPersona.Items.Clear();
+            if (txtBuscarDPI.Text.Length == 0)
+            {
+                MessageBox.Show("No se digitó ningún dpi", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            string dpi = txtBuscarDPI.Text;
+            Persona Buscar = new Persona();
+            Buscar.dpi = dpi;
+            Node<Persona> BuscarD = new Node<Persona>();
+            BuscarD.Valor = Buscar;
+            string companiesLine = "";
+            string cifradosLine = "";
+            foreach (Persona item in listPersona)
+            {
+                if (item.dpi == dpi)
+                {
+                    foreach (string empresa in item.companies)
+                    {
+                        companiesLine = companiesLine + " # " + empresa;
+                    }
+                    foreach (double codificado in item.cifrados)
+                    {
+                        cifradosLine = cifradosLine + " # " + codificado;
+                    }
+                    lstPersona.Items.Add("Compañías: " + companiesLine);
+                    lstPersona.Items.Add("Cifrados: " +  cifradosLine);
+                    //lstPersona.Items.Add($"{item.name} {item.dpi} {item.datebirth} {item.address}");
+                }
+            }
         }
 
 
