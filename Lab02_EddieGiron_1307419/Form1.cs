@@ -39,7 +39,7 @@ namespace Lab02_EddieGiron_1307419
             Persona aux = new Persona();
             Aritmetica aritmetica = new Aritmetica();
 
-            string ruta = "C:/Users/eddie/OneDrive - Universidad Rafael Landivar/U/Año 5/Segundo Ciclo/Estructura de datos 2 (lab)/Laboratorio 2/input lab2.2.csv";
+            string ruta = "C:/Users/eddie/OneDrive - Universidad Rafael Landivar/U/Año 5/Segundo Ciclo/Estructura de datos 2 (lab)/Laboratorio 2/input lab2.csv";
 
             foreach (string item in File.ReadLines(ruta))
             {
@@ -109,11 +109,55 @@ namespace Lab02_EddieGiron_1307419
                 {
                     string json = item.Substring(6);
                     Persona persona = JsonConvert.DeserializeObject<Persona>(json);
+                    Persona ext;
                     for (int i = 0; i < listPersona.Count; i++)
                     {
                         if (persona.dpi == listPersona[i].dpi)
                         {
-                            listPersona[i] = persona;
+                            ext = listPersona[i];
+                            if (persona.companies == listPersona[i].companies)
+                            {
+                                listPersona[i] = persona;
+                                listPersona[i].cifrados = ext.cifrados;
+                            }
+                            else
+                            {
+                                List<Dictionary<char, Letra>> lista = new List<Dictionary<char, Letra>>();
+                                Array.Sort(persona.companies, (x, y) => String.Compare(x, y));
+                                List<double> codigos = new List<double>();
+                                for (int o = 0; o < persona.companies.Length; o++)
+                                {
+                                    Dictionary<char, Letra> dictionary = new Dictionary<char, Letra>();
+                                    string codigo = persona.dpi + o.ToString();
+                                    foreach (var c in codigo)
+                                    {
+                                        Letra nueva = new Letra(); //Se llena el diccionario de todas las letras
+                                        if (!dictionary.ContainsKey(c))
+                                        {
+                                            dictionary.Add(c, nueva);
+                                        }
+                                        dictionary[c].frecuencia++; //Se aumenta la frecuencia de cada letra
+                                    }
+
+                                    double inf = 0, sup = 0, p = 0;
+                                    foreach (var c in dictionary)
+                                    {
+                                        //Se calcula la probabilidad y los limites inferior y superior
+                                        p = (double)c.Value.frecuencia / codigo.Length;
+                                        sup = inf + p;
+                                        dictionary[c.Key].probabilidad = p;
+                                        dictionary[c.Key].inferior = inf;
+                                        dictionary[c.Key].superior = sup;
+                                        inf = sup;
+                                    }
+
+                                    double newCode = aritmetica.Coding(codigo, dictionary);
+                                    codigos.Add(newCode);
+                                    lista.Add(dictionary);
+                                }
+                                listPersona[i].diccionarios = lista;
+                                listPersona[i].cifrados = codigos;
+                            }
                         }
                     }
                 }
@@ -142,7 +186,6 @@ namespace Lab02_EddieGiron_1307419
                 }
             }
         }
-
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             List<Persona> prueba = new List<Persona>();
@@ -215,7 +258,7 @@ namespace Lab02_EddieGiron_1307419
         }
         private void btnExportar_Click(object sender, EventArgs e)
         {
-            string rutasalida = "C:/Users/eddie/OneDrive - Universidad Rafael Landivar/U/Año 5/Segundo Ciclo/Estructura de datos 2 (lab)/output.json";
+            string rutasalida = "C:/Users/eddie/OneDrive - Universidad Rafael Landivar/U/Año 5/Segundo Ciclo/Estructura de datos 2 (lab)/Laboratorio 2/output.json";
             string jsonout = JsonConvert.SerializeObject(listPersona, Formatting.Indented);
             File.WriteAllText(rutasalida, jsonout);
         }
@@ -253,6 +296,7 @@ namespace Lab02_EddieGiron_1307419
                         lstPersona.Items.Add("Compañías: " + companiesLine);
                         lstPersona.Items.Add("Cifrados: " + cifradosLine);
                         Buscando = item;
+                        break;
                     }
                 }
             }

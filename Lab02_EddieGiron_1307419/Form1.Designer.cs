@@ -63,6 +63,7 @@
             this.btnExportar.TabIndex = 18;
             this.btnExportar.Text = "Exportar";
             this.btnExportar.UseVisualStyleBackColor = true;
+            this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
             // 
             // btnAnterior
             // 
@@ -72,6 +73,7 @@
             this.btnAnterior.TabIndex = 17;
             this.btnAnterior.Text = "Anterior";
             this.btnAnterior.UseVisualStyleBackColor = true;
+            this.btnAnterior.Click += new System.EventHandler(this.btnAnterior_Click);
             // 
             // btnSiguiente
             // 
@@ -81,6 +83,7 @@
             this.btnSiguiente.TabIndex = 16;
             this.btnSiguiente.Text = "Siguiente";
             this.btnSiguiente.UseVisualStyleBackColor = true;
+            this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
             // 
             // txtBuscar
             // 
@@ -106,6 +109,7 @@
             this.btnBuscar.TabIndex = 13;
             this.btnBuscar.Text = "Mostrar";
             this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // label1
             // 

@@ -59,7 +59,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Funciones\ClaseFunciones.cs" />
     <Compile Include="Letra.cs" />
     <Compile Include="Persona\Persona.cs" />
     <Compile Include="Program.cs" />
