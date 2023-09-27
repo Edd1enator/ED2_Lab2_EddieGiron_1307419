@@ -41,12 +41,15 @@
             this.txtBuscarDPI = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btnBuscarDPI = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnDecodificar = new System.Windows.Forms.Button();
+            this.cmbCompanies = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(801, 244);
+            this.label3.Location = new System.Drawing.Point(801, 321);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(117, 16);
             this.label3.TabIndex = 19;
@@ -54,7 +57,7 @@
             // 
             // btnExportar
             // 
-            this.btnExportar.Location = new System.Drawing.Point(804, 271);
+            this.btnExportar.Location = new System.Drawing.Point(804, 348);
             this.btnExportar.Name = "btnExportar";
             this.btnExportar.Size = new System.Drawing.Size(75, 30);
             this.btnExportar.TabIndex = 18;
@@ -83,7 +86,7 @@
             // 
             this.txtBuscar.Location = new System.Drawing.Point(804, 128);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(100, 22);
+            this.txtBuscar.Size = new System.Drawing.Size(118, 22);
             this.txtBuscar.TabIndex = 15;
             // 
             // label2
@@ -97,7 +100,7 @@
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(910, 124);
+            this.btnBuscar.Location = new System.Drawing.Point(928, 124);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(75, 30);
             this.btnBuscar.TabIndex = 13;
@@ -136,7 +139,7 @@
             // 
             this.txtBuscarDPI.Location = new System.Drawing.Point(804, 199);
             this.txtBuscarDPI.Name = "txtBuscarDPI";
-            this.txtBuscarDPI.Size = new System.Drawing.Size(100, 22);
+            this.txtBuscarDPI.Size = new System.Drawing.Size(118, 22);
             this.txtBuscarDPI.TabIndex = 22;
             // 
             // label4
@@ -150,7 +153,7 @@
             // 
             // btnBuscarDPI
             // 
-            this.btnBuscarDPI.Location = new System.Drawing.Point(910, 195);
+            this.btnBuscarDPI.Location = new System.Drawing.Point(928, 195);
             this.btnBuscarDPI.Name = "btnBuscarDPI";
             this.btnBuscarDPI.Size = new System.Drawing.Size(75, 30);
             this.btnBuscarDPI.TabIndex = 20;
@@ -158,11 +161,42 @@
             this.btnBuscarDPI.UseVisualStyleBackColor = true;
             this.btnBuscarDPI.Click += new System.EventHandler(this.btnBuscarDPI_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(801, 245);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(101, 16);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "Decodificar DPI";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // btnDecodificar
+            // 
+            this.btnDecodificar.Location = new System.Drawing.Point(928, 264);
+            this.btnDecodificar.Name = "btnDecodificar";
+            this.btnDecodificar.Size = new System.Drawing.Size(75, 30);
+            this.btnDecodificar.TabIndex = 23;
+            this.btnDecodificar.Text = "Decode";
+            this.btnDecodificar.UseVisualStyleBackColor = true;
+            this.btnDecodificar.Click += new System.EventHandler(this.btnDecodificar_Click);
+            // 
+            // cmbCompanies
+            // 
+            this.cmbCompanies.FormattingEnabled = true;
+            this.cmbCompanies.Location = new System.Drawing.Point(801, 268);
+            this.cmbCompanies.Name = "cmbCompanies";
+            this.cmbCompanies.Size = new System.Drawing.Size(121, 24);
+            this.cmbCompanies.TabIndex = 26;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1003, 443);
+            this.ClientSize = new System.Drawing.Size(1023, 443);
+            this.Controls.Add(this.cmbCompanies);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.btnDecodificar);
             this.Controls.Add(this.txtBuscarDPI);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnBuscarDPI);
@@ -198,6 +232,9 @@
         private System.Windows.Forms.TextBox txtBuscarDPI;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnBuscarDPI;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnDecodificar;
+        private System.Windows.Forms.ComboBox cmbCompanies;
     }
 }
 

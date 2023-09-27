@@ -13,6 +13,7 @@ using Es_Arboles;
 using Newtonsoft.Json;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using System.Reflection;
 //using System.Text.Json;
 
 
@@ -27,6 +28,7 @@ namespace Lab02_EddieGiron_1307419
         private int max;
         private int min;
         private int ncont;
+        private Persona Buscando;
         public Form1()
         {
             InitializeComponent();
@@ -219,44 +221,79 @@ namespace Lab02_EddieGiron_1307419
         }
         private void btnBuscarDPI_Click(object sender, EventArgs e)
         {
-            List<Persona> prueba = new List<Persona>();
-            lstPersona.Items.Clear();
-            if (txtBuscarDPI.Text.Length == 0)
+            try
             {
-                MessageBox.Show("No se digitó ningún dpi", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            string dpi = txtBuscarDPI.Text;
-            Persona Buscar = new Persona();
-            Buscar.dpi = dpi;
-            Node<Persona> BuscarD = new Node<Persona>();
-            BuscarD.Valor = Buscar;
-            string companiesLine = "";
-            string cifradosLine = "";
-            foreach (Persona item in listPersona)
-            {
-                if (item.dpi == dpi)
+                cmbCompanies.Items.Clear();
+                List<Persona> prueba = new List<Persona>();
+                lstPersona.Items.Clear();
+                if (txtBuscarDPI.Text.Length == 0)
                 {
-                    foreach (string empresa in item.companies)
+                    MessageBox.Show("No se digitó ningún dpi", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                string dpi = txtBuscarDPI.Text;
+                Persona Buscar = new Persona();
+                Buscar.dpi = dpi;
+                Node<Persona> BuscarD = new Node<Persona>();
+                BuscarD.Valor = Buscar;
+                string companiesLine = "";
+                string cifradosLine = "";
+                foreach (Persona item in listPersona)
+                {
+                    if (item.dpi == dpi)
                     {
-                        companiesLine = companiesLine + " # " + empresa;
+                        foreach (string empresa in item.companies)
+                        {
+                            companiesLine = companiesLine + " # " + empresa;
+                            cmbCompanies.Items.Add(empresa);
+                        }
+                        foreach (double codificado in item.cifrados)
+                        {
+                            cifradosLine = cifradosLine + " # " + codificado;
+                        }
+                        lstPersona.Items.Add("Compañías: " + companiesLine);
+                        lstPersona.Items.Add("Cifrados: " + cifradosLine);
+                        Buscando = item;
                     }
-                    foreach (double codificado in item.cifrados)
-                    {
-                        cifradosLine = cifradosLine + " # " + codificado;
-                    }
-                    lstPersona.Items.Add("Compañías: " + companiesLine);
-                    lstPersona.Items.Add("Cifrados: " +  cifradosLine);
-                    //lstPersona.Items.Add($"{item.name} {item.dpi} {item.datebirth} {item.address}");
                 }
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Se produjo un error: ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
+            }
         }
-
-
-        private void Form1_Load(object sender, EventArgs e)
+        private void btnDecodificar_Click(object sender, EventArgs e)
         {
-            CargarArchivo();
+            try
+            {
+                Aritmetica aritmetica = new Aritmetica();
+                lstPersona.Items.Clear();
+                string comp = cmbCompanies.Text;
+                if (cmbCompanies.Text == null)
+                {
+                    MessageBox.Show("No se seleccionó ninguna compañia", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                int indice = Array.BinarySearch(Buscando.companies, comp);
+                double cifrado = Buscando.cifrados[indice];
+                Dictionary<char, Letra> DicBuscando = Buscando.diccionarios[indice];
+                string result = aritmetica.Decode(cifrado, DicBuscando);
+                lstPersona.Items.Add("DPI decodificado: " + result);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Se produjo un error: ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
+            }
         }
+
+
+
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
         {
 
         }
